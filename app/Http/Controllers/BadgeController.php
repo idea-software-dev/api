@@ -39,7 +39,7 @@ class BadgeController extends Controller
 
                     break;
             }
-            $url = url('/badge/'.$badge->url_handle);
+            $url = 'https://idea.org.uk/badge/'.$badge->url_handle;
             $data[] = [
                 'uid' => $badge->id,
                 'status' => $badge->dev_status,
