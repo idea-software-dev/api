@@ -20,7 +20,16 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
-        // Route::get('/me', fn (Request $request) => $request->user());
+        Route::get('/me', function (Request $request) {
+            return response()->json(
+                [
+                    'id' => $user->id,
+                    'nickname' => $user->nickname,
+                    'email' => $user->email,
+                ],
+                Response::HTTP_OK
+            );
+        });
     });
 
     Route::get('/badges', [BadgeController::class, 'index']);
