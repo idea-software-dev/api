@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\BadgeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BadgeController;
 
 /*
 Route::get('/user', function (Request $request) {
@@ -15,8 +16,12 @@ Route::group(['prefix' => 'v1'], function () {
         return response()->json(['status' => 'API is running']);
     });
 
-    Route::get('/badges', [BadgeController::class, 'index']);
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:6,1');
 
-    // Add your API routes here
-    // Example: Route::get('/example', [ExampleController::class, 'index']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout']);
+        // Route::get('/me', fn (Request $request) => $request->user());
+    });
+
+    Route::get('/badges', [BadgeController::class, 'index']);
 });
